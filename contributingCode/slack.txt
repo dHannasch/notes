@@ -1,0 +1,16 @@
+
+yt-project.slack.com
+
+
+Nathan Goldbaum 3:32 PM test PR 1936
+yt-fidoBOT 3:33 PM job submitted
+pull requests automatically trigger tests when you open or update them
+we can also manually trigger builds in here
+i had to do it for that one because we have a flaky test that crashes the build
+
+
+
+>>> (yt.YTArray([2], dtype=np.uint64) * 2).dtype
+dtype('float64')
+
+

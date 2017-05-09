@@ -1,0 +1,134 @@
+
+http://stackoverflow.com/questions/3688263/mercurial-beheading-a-head
+Update your repository to the head with the revision that you want to forget about, then use the --close-branch option to hg commit
+
+"strip", as mentioned above, will remove the history of that head. If you want to preserve the head's history but just mark it as closed so that others won't be prompted to merge it, just use:
+
+hg commit -m "bad changes to abandon"
+hg update <previous commit you want to revert to>
+hg commit -m "new head"
+# hg heads should now show two heads
+hg update <bad changes to abandon>
+hg commit --close-branch -m "Closing this head"
+hg update <new head>
+
+Contrary to its name, --close-branch doesn't close the entire branch; it just closes the head you use it on. It's so named as closing all heads of a particular named branch results in the entire branch itself being closed; this is the typical use of --close-branch, but it can also be used to close an individual head without closing the entire branch, too.
+
+You will need to use hg push --force the first time you push this closed head to another repository since you are actually create additional heads in the remote repository when you push. So tell Mercurial that this is okay with --force.
+
+
+
+DO NOT USE hg remove! In most cases, you want hg forget.
+hg remove will actually delete the files.
+
+
+
+.. _installing:
+
+Ubuntu 15.04 has Mercurial 3.1.2, which does not have internal:merge3. I want to be using the same merge tool as the rest of the team.
+
+The Mercurial README says that you can run make local to make a version runnable without installing, but this is not true. Or rather, it will *run*, but it won't actually *work*.
+hannasc2@ncsa-f34848:~/Desktop/ytFork$ newhg --version
+Mercurial Distributed SCM (version 3.7-rc+27-7cb7264cfd52)
+hannasc2@ncsa-f34848:~/Desktop/ytFork$ newhg resolve yt/units/unit_registry.py
+merging yt/units/unit_registry.py
+/bin/sh: 1: internal:merge3: not found
+merging yt/units/unit_registry.py failed!
+
+specifying --tool internal:merge3 worked
+
+You have a file $HOME/.hgrc for your user-level default settings, which can be overridden on a repository-by-repository basis by the .hg/hgrc.
+
+
+
+.hgignore needs the names of auto-generated .cpp files from Cython so it knows to ignore them
+
+
+
+.. _bookmarks:
+
+bookmark \approx sub-branch, usually give every head a bookmark except temporary heads that you immediately merge
+ certainly if you're going to do a pull request on a head, be sure to bookmark it first
+
+if hg push --bookmark compareWithoutCopying, doesn't complain about adding a head
+
+every time hg update bookmarkName, need to python setup.py develop (remember to use the same python you'll use to run!) because in general you'll have created the bookmarks at different times with different C files
+
+You MUST use hg push --bookmark for each bookmark, otherwise Mercurial will push the commits but not make the external repo aware of the bookmark itself:
+https://www.mercurial-scm.org/wiki/Bookmarks
+ When you clone a repository, all remote bookmarks are transferred. However only bookmarks that are present on both the local and the remote repositories are updated on push. This is done to keep your local bookmarks local until you manually publish them.
+ To delete a bookmark from a server, delete it locally first, then use push -B on the deleted name.
+
+The special bookmark @ is what all clones automatically update to.
+
+$ hg bookmarks --help
+    Creating or updating to a bookmark causes it to be marked as 'active'. The
+    active bookmark is indicated with a '*'. When a commit is made, the active
+    bookmark will advance to the new commit.
+That's what it *says*, but after merging in changes from somebody else's fork, my bookmark sphereRayTracer apparently stopped advancing and never advanced again, through twenty-three commits, despite being marked with a star. I didn't notice until I tried to change the @ bookmark and saw that the current commit was 21248:
+~/Desktop/ytFork$ hg bookmarks
+   @                         20768:8752de74f4e3
+ * sphereRayTracer           21225:3598d3ee355c
+~/Desktop/ytFork$ hg bookmark --force @
+~/Desktop/ytFork on @$ hg bookmarks
+ * @                         21248:ac2853313f5b
+   sphereRayTracer           21225:3598d3ee355c
+So...the active bookmark is indicated with a '*'. When a commit is made, the active bookmark will advance to the new commit. But I made twenty-three commits, and the active (starred) bookmark did not advance.
+Looking back at my prompt, the sphereRayTracer bookmark didn't appear (I didn't notice at the time because I also work on another machine that doesn't have my .hgrc so doesn't show the active bookmark).
+
+https://www.mercurial-scm.org/wiki/Bookmarks
+ Only a single bookmark can be active at any given time, and only a bookmark that points to the current revision can be active. Mercurial only tracks and updates the currently active bookmark (if there is any).
+So the only way to have @ be active is to delete sphereRayTracer.
+
+
+http://www.kevinberridge.com/2012/05/hg-bookmarks-made-me-sad.html
+http://i-think22.net/archives/2013/04/03/mercurial-taming-multiple-heads-with-bookmarks/
+http://i-think22.net/archives/2013/04/07/mercurial-configure-a-graphical-diff-tool/
+
+
+Nathan has it set up to show his current bookmark in his prompt?
+https://www.mercurial-scm.org/wiki/PromptExtension
+ This extension is not distributed with Mercurial.
+http://sjl.bitbucket.org/hg-prompt/quickstart/
+
+I just accidentally made changes that should have gone into periodicUnit, onto sphereRayTracer instead.
+So, I did
+hannasc2@ncsa-f34848:~/Desktop/ytFork$ hg commit -m "rebase this to periodicUnit"
+hannasc2@ncsa-f34848:~/Desktop/ytFork$ hg help rebase
+hannasc2@ncsa-f34848:~/Desktop/ytFork$ hg rebase --source tip --dest periodicUnit
+rebasing 18848:c8fcda33e632 "rebase this to periodicUnit" (tip sphereRayTracer)
+merging yt/units/yt_array.py
+hannasc2@ncsa-f34848:~/Desktop/ytFork$ hg bookmark
+   @                         18576:d7acb82ef450
+   periodicUnit              18845:111a88896574
+ * sphereRayTracer           18848:6da5159405d3
+hg bookmark says that I'm still on sphereRayTracer, and that sphereRayTracer is commit 18848, the one I just supposedly rebased onto periodicUnit.
+hg view doesn't work, but hg heads reveals a new anonymous head 18847:a89440a56fbb, so I'm guessing that Mercurial moved the bookmark sphereRayTracer, did NOT move the bookmark periodicUnit, and now I need to move both bookmarks to where they should be.
+
+I later found out you're supposed to hg update to the desired destination, then hg merge --rev the revision you want.
+But let's use this as an exercise in Mercurial problem-solving.
+hg view didn't work because of course it didn't, but fortunately I'd recently pushed and BitBucket showed me a graph of the commits, which showed me that actually the last TWO commits went to the wrong head.
+First, I had to hg bookmark -r 18846:2ab79ee sphereRayTracer. It wouldn't move the bookmark, so I had to --force it.
+Then hg bookmark -r 18848 periodicUnit -f.
+hannasc2@ncsa-f34848:~/Desktop/ytFork$ hg merge -r  a89440a
+remote changed yt/utilities/lib/sphere_ray_tracer/rayTracing.pyx which local deleted
+The word deleted inspired a mild panic attack, and I still don't know why I got this message, because the whole point was that 18847:a89440a was strictly changes to periodicUnit files, NOT to the sphereRayTracer file rayTracing.pyx.
+hannasc2@ncsa-f34848:~/Desktop/ytFork$ hg commit -m "merged in a89440a clean up comments"
+Now sphereRayTracer no longer showed up as a head, so
+hannasc2@ncsa-f34848:~/Desktop/ytFork$ hg update sphereRayTracer 
+7 files updated, 0 files merged, 0 files removed, 0 files unresolved
+(activating bookmark sphereRayTracer)
+hannasc2@ncsa-f34848:~/Desktop/ytFork$ hg commit -m "empty commit"
+created new head
+
+
+
+enabling hgk/hg view in .hgrc does not work, need to apt-get install hgview
+
+
+
+
+
+
+
+

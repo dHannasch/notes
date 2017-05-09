@@ -1,0 +1,111 @@
+
+clean this up and put it in CONTRIBUTING.rst
+
+Nathan Goldbaum said never push Sync button with Mercurial, Bitbucket can pick the wrong head
+instead hg pull mainyt
+ where mainyt = ssh://hg@bitbucket.org/yt_analysis/yt in hgrc
+the first time you pull, you'll have to confirm https://answers.atlassian.com/questions/331668/how-to-rectify-ssh-error-authenticity-of-host-cant-be-established
+
+to get the changes from an open pull request (#2264, to be specific) after yt-fido approves it but before it's accepted,
+ click to get the commit hash then
+ hg pull --rev a6f4cd1d07f7 ssh://hg@bitbucket.org/MatthewTurk/yt
+ I got all his bookmarks, but not the other heads
+
+https://confluence.atlassian.com/bitbucket/add-an-ssh-key-to-an-account-302811853.html
+ From Bitbucket Cloud, choose avatar (top right corner) > Settings
+ Click SSH keys on the left sidebar.
+hannasc2@ncsa-f34848:~/Desktop/ytFork$ cat ~/.ssh/id_rsa.pub
+cat: /home/hannasc2/.ssh/id_rsa.pub: No such file or directory
+If you don't already have a public key, click generate a SSH key. (Seriously, their instructions on that page are actually quite good.)
+https://confluence.atlassian.com/bitbucket/set-up-ssh-for-mercurial-728138122.html
+ ls -a ~/.ssh
+ If you have defined a default identity, you'll see the two id_* files
+ ssh-keygen
+ ps -e | grep [s]sh-agent  command to see if the agent is running. If the agent isn't running, start it manually with ssh-agent /bin/bash
+ ssh-add ~/.ssh/id_rsa
+ ssh-add -l to list the keys the agent is carrying.
+Copy your key to your clipboard with: xclip -sel clip < ~/.ssh/id_rsa.pub
+
+If you get "Agent admitted failure to sign using the key." try ssh-add without arguments and enter your passphrase if prompted.
+
+# lb -|- str
+
+If you see an error from jenkins that looks like
+ File "/var/jenkins_home/workspace/py27_unittests/yt/yt/units/unit_registry.py", line 20
+   <<<<<<< local
+unless that line really is in your own copy of the file, what's probably happening is that jenkins is auto-merging in your changes and there are merge conflicts.
+You need to hg pull from the main yt repo and manually merge the latest commits into whatever bookmark is having problems.
+
+hg heads should include the latest pull from mainyt:
+changeset:   18841:34ed15d98fe4
+branch:      yt
+tag:         tip
+hannasc2@ncsa-f34848:~/Desktop/ytFork$ hg merge -r 18841:34ed15d98fe4
+merging yt/units/tests/test_units.py
+/bin/sh: 1: internal:merge3: not found
+merging yt/units/tests/test_units.py failed!
+merging yt/units/unit_registry.py
+/bin/sh: 1: internal:merge3: not found
+merging yt/units/unit_registry.py failed!
+146 files updated, 0 files merged, 23 files removed, 2 files unresolved
+use 'hg resolve' to retry unresolved file merges or 'hg update -C .' to abandon
+
+
+
+
+
+view active pull requests: https://bitbucket.org/dashboard/pullrequests?section=watching
+ note that they do NOT show up on your fork
+
+
+It's important to use a new branch for pull requests for several reasons:
+    It allows you to submit multiple pull requests without confusion. The classical Github gotcha is to continue committing to a pull request branch after making the initial request. When these commits are pushed to the remote, they will become part of the original pull request which often ends up conflating unrelated functionality.
+    When your pull request is merged into the target branch, the maintainer may decide to rebase your commits to avoid a merge commit, or to squash the commits into a single coherent commit. If your pull request was from your 'master' branch, you will encounter problems when merging the target branch back into your own 'master'. Using a temporary branch means it can be discarded once the pull request is accepted and it doesn't matter that your history was rewritten.
+
+rebase replays your commits on top of the new commits from the destination branch so that the merge can be a 'fast-forward'.
+The pull request branch should be deleted once it has been merged and so it shouldn't matter that its history is being rewritten before merging.
+
+Make sure the destination branch is correct, it may not always be 'master'.
+ yt is dev0, I believe
+
+The description should explain what the pull request contains as well as the thinking behind it.
+
+Try and build a good audit trail - your future self will be grateful. Where possible cross-reference other resources in your commit messages. These could be:
+    Github pull requests or issues (eg "Related to #123")
+    Mailing-list threads that discuss the work in question (try and use mailing list software that lets you link to a discussion). If you use Basecamp or something similar, link to the relevant discussion.
+    Articles or blog posts relevant to your work
+    If you're puzzled by a particular line within a file, use git blame to find the commit that introduced it.
+    The commit message should explain the change that led to this line and link back to a pull request.
+    The pull request should be a set of related commits that together implement a new feature. The pull request description should be a functional spec for the feature in question, together with a link to the mailing list thread where this feature was discussed.
+
+
+
+
+
+
+Put relevant git information into your prompt - this will make your life easier. Here's a bash snippet for adding the current git branch to your prompt:
+# ~/.bashrc
+function parse_git_branch {
+    git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1) /'
+}
+PS1="\[\e[32m\]\$(parse_git_branch)\[\e[34m\]\h:\W \$ \[\e[m\]"
+export PS1
+
+
+
+
+https://confluence.atlassian.com/bitbucket/highlight-syntax-and-mark-up-issues-221451123.html
+Syntax highlighting and markup in the issue tracker is Markdown syntax just as it is with comments in Bitbucket Cloud.
+
+https://bitbucket.org/tutorials/markdowndemo/overview#markdown-header-code-and-syntax-highlighting
+Bitbucket accepts the 'short name' or the 'mimetype' of anything in http://pygments.org/docs/lexers/
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,5 @@
+
+loopy is a code generator for array-based code in the OpenCL/CUDA execution model. https://documen.tician.de/loopy/
+
+
+

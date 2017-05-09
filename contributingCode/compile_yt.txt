@@ -1,0 +1,77 @@
+
+even without my stuff, get this on Mac 10.10.5 (but it does compile eventually):
+
+ITs-MacBook-Pro:yt_grid_traversal itguy$ python2 setup.py develop
+Compilation of OpenMP test code failed with the error: 
+test.c:1:10: fatal error: 'omp.h' file not found
+#include <omp.h>
+         ^
+1 error generated.
+
+Disabling OpenMP support. 
+Running from numpy source directory.
+/var/folders/lb/272t8ytx0p78_qlgh566ryzh0000gn/T/easy_install-RCfE5K/numpy-1.11.2/setup.py:327: UserWarning: Unrecognized setuptools command, proceeding with generating Cython sources and expanding templates
+  warnings.warn("Unrecognized setuptools command, proceeding with "
+non-existing path in 'numpy/distutils': 'site.cfg'
+/usr/local/Cellar/python/2.7.12_2/Frameworks/Python.framework/Versions/2.7/lib/python2.7/distutils/dist.py:267: UserWarning: Unknown distribution option: 'define_macros'
+  warnings.warn(msg)
+Could not locate executable gfortran
+Could not locate executable f95
+Could not locate executable f90
+Could not locate executable f77
+Could not locate executable xlf90
+Could not locate executable xlf
+Could not locate executable ifort
+Could not locate executable ifc
+Could not locate executable g77
+Could not locate executable g95
+Could not locate executable pgfortran
+don't know how to compile Fortran code on platform 'posix'
+_configtest.c:1:5: warning: incompatible redeclaration of library function 'exp' [-Wincompatible-library-redeclaration]
+int exp (void);
+    ^
+_configtest.c:1:5: note: 'exp' is a builtin with type 'double (double)'
+1 warning generated.
+_configtest.c:1:10: fatal error: 'endian.h' file not found
+#include <endian.h>
+         ^
+1 error generated.
+_configtest.c:1:10: fatal error: 'endian.h' file not found
+#include <endian.h>
+         ^
+1 error generated.
+_configtest.c:7:12: error: use of undeclared identifier 'SIZEOF_LONGDOUBLE'
+    (void) SIZEOF_LONGDOUBLE;
+           ^
+1 error generated.
+_configtest.c:7:12: error: use of undeclared identifier 'SIZEOF_LONGDOUBLE'
+    (void) SIZEOF_LONGDOUBLE;
+           ^
+1 error generated.
+_configtest.c:1:5: warning: incompatible redeclaration of library function 'exp' [-Wincompatible-library-redeclaration]
+int exp (void);
+    ^
+_configtest.c:1:5: note: 'exp' is a builtin with type 'double (double)'
+1 warning generated.
+_configtest.c:1:5: warning: incompatible redeclaration of library function 'asin' [-Wincompatible-library-redeclaration]
+int asin (void);
+    ^
+_configtest.c:1:5: note: 'asin' is a builtin with type 'double (double)'
+_configtest.c:2:5: warning: incompatible redeclaration of library function 'cos' [-Wincompatible-library-redeclaration]
+int cos (void);
+    ^
+_configtest.c:2:5: note: 'cos' is a builtin with type 'double (double)'
+_configtest.c:3:5: warning: incompatible redeclaration of library function 'log' [-Wincompatible-library-redeclaration]
+int log (void);
+    ^
+
+
+
+
+
+
+
+
+
+
+

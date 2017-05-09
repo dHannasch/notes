@@ -1,0 +1,56 @@
+
+http://svn.python.org/projects/python/trunk/Misc/README.valgrind
+This document describes some caveats about the use of Valgrind with
+Python.  Valgrind is used periodically by Python developers to try
+to ensure there are no memory leaks or invalid memory reads/writes.
+
+If you don't want to read about the details of using Valgrind, there
+are still two things you must do to suppress the warnings.  First,
+you must use a suppressions file.  One is supplied in
+Misc/valgrind-python.supp.  Second, you must do one of the following:
+
+  * Uncomment Py_USING_MEMORY_DEBUGGER in Objects/obmalloc.c,
+    then rebuild Python
+  * Uncomment the lines in Misc/valgrind-python.supp that
+    suppress the warnings for PyObject_Free and PyObject_Realloc
+
+If you want to use Valgrind more effectively and catch even more
+memory leaks, you will need to configure python --without-pymalloc.
+PyMalloc allocates a few blocks in big chunks and most object
+allocations don't call malloc, they use chunks doled about by PyMalloc
+from the big blocks.  This means Valgrind can't detect
+many allocations (and frees), except for those that are forwarded
+to the system malloc.  Note: configuring python --without-pymalloc
+makes Python run much slower, especially when running under Valgrind.
+You may need to run the tests in batches under Valgrind to keep
+the memory usage down to allow the tests to complete.  It seems to take
+about 5 times longer to run --without-pymalloc.
+https://blogs.gnome.org/jamesh/2008/03/24/python-valgrind/
+ As I don’t like having to recompile Python I took a look at Valgrind’s client API, which provides a way for a program to detect whether it is running under Valgrind. Using the client API I was able to put together a patch that automatically disables pymalloc when appropriate.
+
+
+http://thomas-cokelaer.info/blog/2013/10/profiling-python-with-valgrind/
+pyprof2calltree
+python -m cProfile -o profile_data.pyprof run.py
+pyprof2calltree -i profile_data.pyprof  # this converts the stats into a callgrind format
+kcachegrind profile_data.pyprof.log
+Alternatively, for visualisation, you can also use gprof2dot and graphviz (dot):
+gprof2dot.py --format=callgrind --output=out.dot profile_data.pyprof.log
+dot -Tsvg out.dot -o graph.svg
+
+
+https://github.com/cython/cython/wiki/UsingValgrindToDebug
+Here is a suppression file that you can use with Cython modules: https://github.com/lxml/lxml/raw/master/valgrind-python.supp
+valgrind --tool=memcheck --leak-check=full --num-callers=30 --suppressions=valgrind-python.supp python myprogram.py
+
+
+
+
+
+
+http://stackoverflow.com/questions/1519276/is-it-normal-that-running-python-under-valgrind-shows-many-errors-with-memory?rq=1
+
+
+
+
+

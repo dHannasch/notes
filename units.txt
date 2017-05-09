@@ -1,0 +1,53 @@
+
+https://futureboy.us/frinkdata/units.txt
+                // radians ARE dimensionless units and making them their own
+                // unit leads to all sorts of arbitrary convolutions in
+                // calculations (at the possible expense of some inclarity if
+                // you don't know what you're doing.)
+radian is really an annotation on a dimensionless quantity
+
+
+
+someone says there's some bad stuff happening in level X - objects falling through the floor, or moving erratically, or the physics is bouncing oddly. So you test level X and it seems fine, and then you have the "works on my machine" argument with the tester, and it takes you several days to figure out that it only happens in one part of level X, and wouldn't you know it - that's the part where you're a long way from the origin and some part of the physics code is subtracting two large numbers and getting an imprecise result.
+
+with floating-point arithmetic, want coordinates that are small where you need precision
+or rather, easily distinguishable where you need precision: consider spherical coordinates
+ the farther from the origin, the greater the error in real distance 
+ with Cartesian, the error in x,y,z is about 2**-52 times x,y,z
+  so error measured in distance about 2**-52 times distance from origin
+ with spherical, the error measured in distance is about 2**-52 times distance from origin, again
+
+If there is any chance at all that someone might play your game for four hours, or leave it on the main menu for four hours, or leave it paused mid-game for four hours, initialize your clock at much much more than four hours! At least that way you'll find the problems sooner.
+I think the easiest way to encapsulate this (if you're an OOP fan) is to make a "position" class that holds your chosen representation, and the only operations you can perform on that class (aside from copies and the usual) are subtracting one from another to give a standard float32 vec3, and adding a float32 vec3 to a position to get another position. So it means you can't accidentally use a position without doing calculations relative to another position. The same goes for time - internally you might use a 32.32 number, but all the outside world needs to know is what TimeA-TimeB is, and that can be a float32 quite happily. Similarly, the only operation you need to do on a time is adjust it forwards or backwards by a timestep, and it's fine to have the timestep as a float32.
+
+storing the planes as A,B,C,D where: Ax+By+Cz+D>0. Which is fine, except that's also going to have precision problems. And it's going to have precision problems far earlier, because x,y,z are another object's position. And now you're multiplying two positions together and subtracting a bunch of them and asking if they're positive or negative and the problem with that is that you will halve your available precision. So even doubles will only get you 52/2 = 26 bits of precision, which is rubbish. And experience with BSP trees has shown that they're extremely intolerant of precision errors. The solution for this case is to store a point on the plane and the plane's normal.
+
+because it's all to do with how nice you are to caches, which are unpredictable and temperamental beasts, its incredibly sensitive to both Heisenburg and Butterfly effects.
+
+
+
+
+
+
+
+
+max = ( max > gamma ) ? max : gamma;
+min = ( min < gamma ) ? min : gamma;
+we did get the min/max of a range of values - but only the range of values after the last NaN.
+this version will never replace max and min with NaNs:
+max = ( gamma > max ) ? gamma : max;
+min = ( gamma < min ) ? gamma : min;
+
+https://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/
+ This is the fifth chapter in a long series. https://randomascii.wordpress.com/category/floating-point/
+ A (mostly) complete list of the other posts includes:
+
+for floats that are positive, finite, and non-zero, the integer representation of a float is a piecewise linear approximation of its base 2 logarithm
+The reason that the integer representation is (after appropriate scaling and biasing) a piecewise linear representation of the base 2 logarithm of a (positive) float is because the exponent is logically the base-2 logarithm of a float, and it is in the high bits. The mantissa linearly interpolates between power-of-2 floats.
+
+
+
+
+
+
+

@@ -1,0 +1,43 @@
+
+Nathan said run gdb on Python
+
+people on the Internet talk like you need a debug build of Python (which Anaconda does not provide), but you don't, you don't need debug symbols *for the Python interpreter*, you need debug symbols *for your C extension*, which you get by putting -ggdb and -Og in your setup.py Extension
+
+https://wiki.python.org/moin/DebuggingWithGdb
+
+gdb --eval-command=run --args python2 /home/hannasc2/anaconda3/envs/python2env/lib/python2.7/site-packages/nose/core.py utilities/lib/sphere_ray_tracer/test_ray_tracing.py
+ImportError: No module named numpy, do not get that error when just run python2 directly
+oh, because python2 is an alias, when do just gdb --eval-command=run --args testsphere it says it doesn't know what testsphere is
+
+gdb --eval-command=run --args /home/hannasc2/anaconda3/envs/python2env/bin/python /home/hannasc2/anaconda3/envs/python2env/lib/python2.7/site-packages/nose/core.py --nocapture utilities/lib/sphere_ray_tracer/test_ray_tracing.py
+
+gdb --eval-command=run --eval-command=bt --args /home/hannasc2/anaconda3/envs/python2env/bin/python /home/hannasc2/anaconda3/envs/python2env/lib/python2.7/site-packages/nose/core.py --nocapture utilities/lib/sphere_ray_tracer/test_ray_tracing.py
+
+Actually, we can do even more with this.
+If terminate() is called due to an unhandled exception, this same trick can lead us right to where the exception was thrown.
+
+terminate called after throwing an instance of 'std::logic_error'
+  what():  bt, can you find me?
+
+Program received signal SIGABRT, Aborted.
+0x00007ffff6d1d267 in __GI_raise (sig=sig@entry=6) at ../sysdeps/unix/sysv/linux/raise.c:55
+55	../sysdeps/unix/sysv/linux/raise.c: No such file or directory.
+#0  0x00007ffff6d1d267 in __GI_raise (sig=sig@entry=6) at ../sysdeps/unix/sysv/linux/raise.c:55
+#1  0x00007ffff6d1eeca in __GI_abort () at abort.c:89
+#2  0x00007fffe5d1106d in __gnu_cxx::__verbose_terminate_handler() ()
+   from /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+#3  0x00007fffe5d0eee6 in ?? () from /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+#4  0x00007fffe5d0ef31 in std::terminate() () from /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+#5  0x00007fffe5d0f149 in __cxa_throw () from /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+!!!
+#6  0x00007fffe5633426 in someSpace::xy_on_azimuth (x=x@entry=1, y=<optimized out>, cosphi=<optimized out>, 
+    sinphi=<optimized out>) at rayTracingUtils.cpp:362
+#7  0x00007fffe5633fa1 in someSpace::AzimuthWedge::intersection (this=<optimized out>, other=...)
+    at rayTracingUtils.cpp:479
+#8  0x00007fffe55d1fa2 in __pyx_pf_2yt_9utilities_3lib_17sphere_ray_tracer_17volumes_and_lines_14PyAzimuthWedge_14intersection_is_empty (__pyx_v_self=__pyx_v_self@entry=0x7fffb72fa290, 
+    __pyx_v_other=__pyx_v_other@entry=0x7fffb72fa410) at volumes_and_lines.cpp:24281
+#9  0x00007fffe55d4800 in __pyx_pw_2yt_9utilities_3lib_17sphere_ray_tracer_17volumes_and_lines_14PyAzimuthWedge_15intersection_is_empty (__pyx_v_self=0x7fffb72fa290, __pyx_v_other=0x7fffb72fa410)
+    at volumes_and_lines.cpp:24254
+
+
+

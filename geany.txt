@@ -1,0 +1,27 @@
+
+but both the TAB key and the CTRL+i shortcut indent when multiple lines are selected.
+For unindenting multiple lines, you can use both the SHIFT+TAB and CTRL+u shortcuts.
+
+
+
+https://www.jetbrains.com/buy/opensource/
+Available only to non-commercial open source projects.
+Provided only to core team developers.
+You have to be a project lead or core committer to apply
+Project must be at least 3 months old
+Project is in active development
+Project must not provide commercial services or distribute any paid software versions
+
+One of the best parts of using an IDE instead of an editor is "Go To Declaration"
+spyder has "go to definition"
+http://stackoverflow.com/questions/3285166/python-ide-that-you-can-highlight-a-method-class-and-jump-to-its-definition
+https://www.jetbrains.com/help/pycharm/2016.1/navigating-to-declaration-or-type-declaration-of-a-symbol.html
+http://www.eclipse.org/community/eclipse_newsletter/2015/august/article4.php
+ PyDev is an open source plugin which turns Eclipse into a resourceful Python IDE.
+Wing makes it easy to jump to the point of definition of a symbol in Python source code by ctrl-clicking on it, pressing F4, or right clicking and selecting Goto
+ https://wingware.com/doc/intro/tutorial-navigating-code
+ https://wingware.com/wingide/navigate-code
+https://blogs.oracle.com/tor/entry/ide_tip_go_to_implementation
+
+
+

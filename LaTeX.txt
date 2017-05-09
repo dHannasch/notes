@@ -1,0 +1,26 @@
+
+http://askubuntu.com/questions/223295/kile-missing-settings-dialog-after-update-to-kubuntu-12-10
+ I can no longer access configuration options in Kile from Settings->Configure kile
+ In fact, "Settings" menu has only five entries: "Define current document as master document", "System check", "Show side bar", "Show message bar", and "Toolbars shown."
+ Try removing the user specific file for Kile. I had the same problem after I messed with the toolbars.
+~$ rm ~/.kde/share/apps/kile/kileui.rc
+These guys had the had the same problem. They suggest the folder ~/.kde4 where on my system 12.10 (64) it was in ~/.kde.
+
+http://latex-community.org/forum/viewtopic.php?f=20&t=22605
+ Until today, when I compiled the document using PDFLaTeX from within Kile everything worked fine. Now, however, it no longer automatically runs bibtex, even though the option "automatically run additional tools" under "Configure Kile -> Tools -> Build -> PDFLaTeX" is checked.
+ Even if I configure the QuickBuild option to run PDFLaTeX BiBTeX no bbl file is created.
+However, if I directly run the BibTeX tool from the drop-down menu or with Alt+-, it works.
+
+
+
+BibTeX regenerates the .bbl file from the .bib file based on the date of the .aux file, not the date of the .bib file; I don't make the rules
+ so if you change the .bib file but not the .tex file, BibTeX will not regenerate the .bbl
+1. Make changes to .bib file.
+2. Run LaTeX (updates .aux file)
+3. Run BibTeX (updates .bbl file)
+4. Run LaTeX (updates .aux file)
+5. Run LaTeX (updates .dvi or .pdf file)
+
+
+
+

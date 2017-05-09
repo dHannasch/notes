@@ -1,0 +1,8 @@
+
+if have Internet, but not admin, there might be a way to install packages with dependencies if admin installs schroot and debootstrap
+http://www.binarytides.com/setup-chroot-ubuntu-debootstrap/
+https://help.ubuntu.com/community/DebootstrapChroot
+
+
+
+

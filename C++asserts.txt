@@ -1,0 +1,32 @@
+
+If an assert fires inside a unit test, you probably don’t want a “friendly” modal dialog box to pop up and require you to hit abort, retry, or cancel.  You certainly don’t want that modal dialog box popping up on your poor automated build server.  You want to terminate that particular unit test and keep going.
+
+http://cnicholson.net/2009/02/stupid-c-tricks-adventures-in-assert/
+google c++ better assert
+http://www.jakeshirley.com/c-asserts-harder-better-faster-stronger/
+https://www.softwariness.com/articles/assertions-in-cpp/
+https://www.softwariness.com/articles/cpp-libraries/
+
+The final common problem with assert macros is that they often leave you alone and lost in the wilderness, about 3 stack frames away from the code that actually triggered the assert.
+
+
+
+http://yosefk.com/blog/error-codes-vs-exceptions-critical-code-vs-typical-code.html
+When most code messes up, garbage appears on the screen or in log files, and a programmer shows up to debug the problem.
+
+With exceptions, it's easier for the programmer to figure out why this garbage appeared, because the failure occurs closer to the point of the error.
+
+f=open_users_file()
+print_users_list(f)
+If open_users_file() throws an exception, then the programmer will see a "No such file or directory" with a call stack and think, "why couldn't this idiot [possibly, me] bother to check if the file is there?" Then he fixes the bug and all is well again.
+
+If open_users_file() returns an invalid file object (similarly to, for example, C++'s ifstream), then print_users_list (which doesn't check errors, either) might print an empty user list. The error might then become "No such user", or "Permission denied", etc. The program will fail further from the point of error – the file opening code – and you'll need to go back and figure out where the error is.
+
+Error codes are safer for well-reviewed code
+Code reviews are generally easier with error codes than exceptions.
+
+
+
+
+
+

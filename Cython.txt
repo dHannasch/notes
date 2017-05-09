@@ -1,0 +1,50 @@
+
+pass C++ class as parameter http://stackoverflow.com/questions/10436837/cython-and-c-class-constructors
+#configparams.pxd
+cdef extern from "configparams.h":
+    cppclass ConfigParams:
+        ConfigParams(int par1)
+        int getPar1()
+
+cdef class PyConfigParams:
+    cdef ConfigParams* thisptr
+
+# session.pyx
+from configparams cimport PyConfigParams
+from cython.operator cimport dereference as deref
+
+cdef class PySession:
+    cdef Session* thisptr
+    def __cinit__(self, PyConfigParams pars):
+        self.thisptr = new Session(deref(pars.thisptr))
+    def doSomething(self):
+        self.thisptr.doSomething()
+
+
+
+Cython package hierarchy https://groups.google.com/forum/#!msg/cython-users/6trL0V1bLx4/7bxhj0xCK50J
+
+
+
+cdef class samplerCaller:
+  cdef np.float64_t v_pos[3]
+results in bizarre error:
+carray.from_py:77:51: 'float64_t' is not a type identifier
+
+collect weird Cython error messages to present to THW
+ see also causesError.pyx, I think I might have another version at home
+ see also Cython.txt at home
+
+http://www.thehackerwithin.org/berkeley/posts/cython-python-c-api/
+
+
+
+
+a public declaration is only needed to make it accessible to external C code.
+
+
+
+
+
+
+

@@ -1,0 +1,17 @@
+
+The MRO shown above is the one order that follows from those constraints:
+
+    LoggingOD precedes its parents, LoggingDict and OrderedDict
+    LoggingDict precedes OrderedDict because LoggingOD.__bases__ is (LoggingDict, OrderedDict)
+    LoggingDict precedes its parent which is dict
+    OrderedDict precedes its parent which is dict
+    dict precedes its parent which is object
+
+The process of solving those constraints is known as linearization. There are a number of good papers on the subject, but to create subclasses with an MRO to our liking, we only need to know the two constraints: children precede their parents and the order of appearance in __bases__ is respected.
+
+Good write-ups for linearization algorithms can be found at Python MRO documentation and at Wikipedia entry for C3 Linearization.
+
+
+
+
+

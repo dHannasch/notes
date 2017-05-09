@@ -1,0 +1,109 @@
+
+Anaconda does not seem to work with virtualenv
+(developyt)hannasc2@ncsa-f34848:~/anaconda3$ which virtualenv
+/home/hannasc2/anaconda3/envs/developyt/bin/virtualenv
+(developyt)hannasc2@ncsa-f34848:~/anaconda3$ virtualenv --always-copy ~/python3env
+Using base prefix '/home/hannasc2/anaconda3/envs/developyt'
+New python executable in /home/hannasc2/python3env/bin/python3
+Also creating executable in /home/hannasc2/python3env/bin/python
+/home/hannasc2/python3env/bin/python3: error while loading shared libraries: libpython3.5m.so.1.0: cannot open shared object file: No such file or directory
+ERROR: The executable /home/hannasc2/python3env/bin/python3 is not functioning
+ERROR: It thinks sys.prefix is '/home/hannasc2/anaconda3' (should be '/home/hannasc2/python3env')
+ERROR: virtualenv is not compatible with this system or executable
+
+https://github.com/brandon-rhodes/homedir/blob/master/bin/%2Cfix-virtualenv-for-anaconda
+ I re-ran "virtualenv", let it die with the error, and looked at the
+# incomplete environment's "bin/python2.7" and found it was the tiny
+# 8,106-byte Python binary that Anaconda ships.  It usually links to
+# their own "libpython2.7.so" and therefore has their crazy non-standard
+# (what were they thinking?) sys.version string that is a perfect match
+# for the regular expression in their crazy non-standard "platform.py".
+# But running "ldd" on the environment's "bin/python2.7" showed it
+# linking to the Ubuntu "libpython2.7.so" instead, which explains the
+# problem: the virtual environment is a collision between the normal
+# "libpython2.7.so" and the non-standard Anaconda "platform.py".
+# How does the Anaconda Python binary usually wind up linking to their
+# own "libpython2.7.so" instead of Ubuntu's?  By, it turns out, having a
+# relative RPATH - that only works if their Python binary is sitting
+# right next to the "lib" directory containing their libpython:
+#
+# $ readelf -d anaconda/bin/python2.7 | grep RPATH
+# 0x0000000f (RPATH)                      Library rpath: [$ORIGIN/../lib]
+#
+# This situation obviously does not pertain in a new virtualenv since it
+# only copies in a minimal ".../lib/pythonX.Y" directory, not any shared
+# libraries into "../lib" itself.  Hence the linker falls back to
+# discovering and linking to the system "libpythonX.Y.so".
+
+
+this says conda is the right way to do things and distutils is the problem http://technicaldiscovery.blogspot.com/2013/12/why-i-promote-conda.html
+ I reply that what is actually
+broken is the design that does not have a delcarative meta-data file
+that describes dependencies and then a build process that creates the
+environment needed before running any code to do the actual build.
+This is what `conda build` does and it works beautifully to create any
+kind of binary package you want from any list of dependencies you may
+have.  Anything else is going to require all kinds of "bootstrap"
+gyrations to fit into the square hole of a process that seems to
+require that all things begin with the python setup.py incantation.
+ Conda pkg files are similar to .whl files except they are Python-agnostic.  A conda pkg file is a bzipped tar file with an 'info' directory, and then whatever other directory structure is created by the install process in "prefix".   It's the equivalent of taking a file-system diff pre- and post-install and then tarring the result up.  It's more general than .whl files and can support any kind of binary file.
+ We don't see easily how to take these simple,
+powerful ideas and adapt them to .whl and virtualenv which are trying
+to fit-in to a world created by distutils and setuptools.  It was
+actually much easier to just write our own solution and create
+hundreds of packages and make them available and provide all the tools
+to reproduce what we have done inside conda than to try and untangle
+how to provide our solution in that world and potentially even not
+quite get the result we want (which can be argued is what happened
+with numpy.distutils).
+ I recognize that
+conda emerged at the same time as the Anaconda distribution was
+stabilizing and so there is natural confusion over the two.  So,
+I will try to clarify: Conda is an open-source, general,
+cross-platform package manager.  One could accurately describe it as a
+cross-platform hombrew written in Python.  Anyone can use the tool and
+related infrastructure to build and distribute whatever packages they
+want.
+
+Anaconda is the collection of conda packages that we at Continuum provide for free to everyone, based on a particular base Python we choose (which you can download at http://continuum.io/downloads as Miniconda).  In the past it has been some work to get conda working outside Miniconda or Anaconda because our
+first focus was creating a working solution for our users.  We have been fixing those minor issues and have now released a version of conda that can be 'pip installed'.   As conda has significant overlap with virtualenv in particular we are still working out kinks in the interop of these two solutions.   But, it all can and should work together and we fix issues as quickly as we can identify them.
+ We also provide a service called http://binstar.org (register with beta-code "binstar in beta") which allows you to host your own binary conda packages.
+
+
+
+
+anaconda tells you to use binstar but does not tell you how, so here's how:
+
+~/anaconda3$ bin/conda install -n python2env pyembree
+Fetching package metadata: ....
+Error: No packages found in current linux-64 channels matching: pyembree
+You can search for this package on Binstar with
+    binstar search -t conda pyembree
+You may need to install the Binstar command line client with
+    conda install binstar
+~/anaconda3$ bin/binstar search -t conda pyembree
+Using binstar api site https://api.anaconda.org
+Run 'binstar show <USER/PACKAGE>' to get more details:
+Packages:
+     Name                      |  Version | Package Types   | Platforms      
+     ------------------------- |   ------ | --------------- | ---------------
+     atmyers/pyembree          |      0.0 | conda           | linux-64, osx-64
+     xarthisius/pyembree       |      0.0 | conda           | linux-64, win-32, win-64
+Found 2 packages
+Andrew T Myers and Kacper Kowalik
+~/anaconda3$ bin/conda install -n python2env --channel https://conda.anaconda.org/binstar pyembree
+Fetching package metadata: ......
+Error: No packages found in current linux-64 channels matching: pyembree
+Kacper Kowalik: it can be installed if you use yt channel http://use.yt/with_conda/
+
+
+
+
+
+
+
+
+
+
+
+

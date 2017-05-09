@@ -1,0 +1,34 @@
+
+Ubuntu backups (deja dup) can use FTP or SSH or WebDAV or Windows Share
+
+https://support.box.com/hc/en-us/articles/200520128-Using-Box-with-FTP
+ we do not recommend using FTP as your primary access method.
+https://support.box.com/hc/en-us/articles/200520058-I-m-having-trouble-using-FTP-with-Box
+ either use FTP, FTPS, or FTPES. SFTP is not supported.
+ Please note that we support Passive FTP, but not Active.
+ NOTE: Make sure you have FTP enabled for your account by going to the Admin console (ask the admin of the enterprise), then going to Apps, and then making sure FTP is enabled.
+Does Box Support WebDAV? https://support.box.com/hc/en-us/articles/200519748?
+ Yes. Whether connecting via iOS, Windows or a WebDAV client, use the following URL in your WebDAV client: https://dav.box.com/dav
+ Login: Your Box login email address and password.  
+ Note: Web browser access is not supported. You must use a WebDAV client.
+ Because uploads through WebDAV are accomplished in two stages, zero-byte files will be uploaded as placeholders before the final file contents are uploaded. This will make a newly created or uploaded file have two versions and include two upload events in reporting.
+ doesn ot say what port to use
+
+WebDAV stands for Web Distributed Authoring and Versioning
+SFTP (SSH File Transfer Protocol, not related to FTP in any way). SFTP is more feature-rich than WebDAV and SFTP is a protocol to access remote file systems, while WebDAV was designed with abstraction in mind (WebDAV was for "documents", while SFTP is for files and directories). SFTP has all benefits mentioned above for WebDAV and is more popular among both admins and developers.
+
+http://ubuntuforums.org/showthread.php?t=899288
+
+http://www.library.illinois.edu/sc/services/data_management/storage.html
+http://web.uillinois.edu/box
+
+https://wikispaces.psu.edu/display/bwkb/How+to+Use+Box+Sync+for+File+Backup
+http://www.makeuseof.com/tag/backup-your-files-to-box-google-drive-skydrive-duplicati/
+
+https://support.box.com/hc/en-us/articles/200521078-Box-Sync-3-x-Behavior-Limitations-and-Recommendations
+Syncing a large number of files and folders can degrade your computer’s performance.
+
+To avoid conflict errors, initiate major file tree reorganization and renaming from within the web application. If possible, restructuring should occur during times when synced items are not being edited.
+so basically, Box Sync does not work for anything important, little practical difference from manually uploading
+
+

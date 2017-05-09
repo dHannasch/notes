@@ -1,0 +1,32 @@
+
+nogil functions cannot be profiled.
+This means that marking a function nogil causes any function that calls that function to have increased tottime (but not increased cumtime).
+
+Actually, nogil functions CAN be profiled, but the results seem to be misleading.
+
+extra time from releasing the GIL is applied to the caller if in the same file, but to the callee if in different files?
+
+What does it mean if cumtime > tottime? How is that possible?
+
+@cython.profile(False)
+This is a problem with all profiling: calling a function in a profile run adds a certain overhead to the function call. This overhead is not added to the time spent in the called function, but to the time spent in the calling function. In this example, approx_pi didn’t need 2.622 seconds in the last run; but it called recip_square 10000000 times, each time taking a little to set up profiling for it. This adds up to the massive time loss of around 2.6 seconds. Having disabled profiling for the often called function now reveals realistic timings for approx_pi; we could continue optimizing it now if needed.
+
+
+
+http://yosefk.com/blog/how-profilers-lie-the-cases-of-gprof-and-kcachegrind.html
+What about the share of time easy() spent in its call to work(), and the share of time hard() spent in work()? By now we know that gprof knows absolutely nothing about this. So it guesses, by taking 3.84 – seconds spent in work(), a reliable number – and divides it between easy() and hard() equally because each called work() once (based on mcount(), a reliable source) – and we get 1.92.
+
+The truth is that each project called the manager once; the manager called each worker twice; and each worker did half the work in the program – all shown at the call graph at the bottom. However, at the top, each of the project functions occupies half the window and shows that worker1 and worker2 each did half of the work in each project - which couldn't be further from the truth.
+
+This falsehood is reported by the call tree (or "callee map" as KCachegrind calls it) – a view which is supposed to show, for each function, the share of work done in each of its callees relative to the work done by all those callees together (as opposed to the call graph which only links to the called functions and tells how many times they were called by that caller – and their share of work in the entire program.)
+
+
+
+http://stackoverflow.com/questions/375913/what-can-i-use-to-profile-c-code-in-linux
+
+http://stackoverflow.com/questions/1079008/how-to-profile-each-call-to-a-function
+ A profiling tool is not magic, and you can roll your own for whatever purpose in a few lines. Something like this, perhaps
+ If you compile the code with "-finstrument-functions" flag, then every entry and exit point of a function in the module that was compiled with this flag, will be stubbed with the calls to instrument functions. 
+
+
+

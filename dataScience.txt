@@ -1,0 +1,5 @@
+
+http://jakevdp.github.io/blog/2014/08/22/hacking-academia/
+In my Brain Drain post, I observed the rise of data-intensive research and lamented that researchers with the requisite interdisciplinary knowledge are largely unrecognized and unrewarded in academia, even as they are highly-sought-after in the tech industry. I previously labeled this type of person a "new breed of scientist", but since then it's become clear that the working label for this type of person has become (for better or worse) a data scientist.
+
+

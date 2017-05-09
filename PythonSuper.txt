@@ -1,0 +1,27 @@
+
+how to check __mro__ Method Resolution Order is correct https://rhettinger.wordpress.com/2011/05/26/super-considered-super/
+
+
+have every method in the ancestor tree cooperatively designed to accept keyword arguments and a keyword-arguments dictionary, to remove any arguments that it needs, and to forward the remaining arguments using **kwds, eventually leaving the dictionary empty for the final call in the chain.
+Each level strips-off the keyword arguments that it needs so that the final empty dict can be sent to a method that expects no arguments at all (for example, object.__init__ expects zero arguments):
+class Shape:
+    def __init__(self, shapename, **kwds):
+        self.shapename = shapename
+        super().__init__(**kwds)
+class ColoredShape(Shape):
+    def __init__(self, color, **kwds):
+        self.color = color
+        super().__init__(**kwds)
+cs = ColoredShape(color='red', shapename='circle')
+
+For cases where object doesn’t have the method of interest (a draw() method for example), we need to write a root class that is guaranteed to be called before object.
+This should be clearly documented so that someone writing new cooperating classes will know to subclass from Root. This restriction is not much different than Python’s own requirement that all new exceptions must inherit from BaseException.
+assertion to ensure it isn’t masking some other draw() method later in the chain.  This could happen if a subclass incorporates a class that has a draw() method but doesn’t inherit from Root, in which case Root could come before that class in the Method Resolution Order.
+class Root:
+    def draw(self):
+        # the delegation chain stops here
+        assert not hasattr(super(), 'draw')
+
+
+
+

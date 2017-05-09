@@ -1,0 +1,80 @@
+
+Enter the following information:
+Connection name: Tech Services VPN
+Gateway: vpn.cites.illinois.edu
+User name: Leave blank at this point.
+Enter the following information:
+Group menu: Select SplitTunnel (Note: This is the most common choice. See About VPN Profiles for information about the alternatives.)
+ If they set up the VPN connection to be a split tunnel configuration along with a IP any any rule on the tunnel traffic, yes, anyone on your corporate network will be able to hit your computer and then launch connections from your computer to the rest of your home network. If split tunneling is not enabled, the people on your corporate network will only be able to get as far as your computer.
+Username: Your NetID (or, if you're a guest, your guest ID)
+Password: Your Active Directory password (or, if you're a guest, your guest password)
+
+
+
+https://www.experts-exchange.com/questions/24268947/Can-anyone-at-work-spy-on-my-own-computer-while-I-am-connected-via-VPN-to-the-work-computer.html
+(1a)  When your computer is VPN'ed in, it is subject to the same scans as a computer on the network (sans the admin credentials).  Thus if you have unprotected shares (administrative or otherwise) on your computer, that data is available.  Further, I could scan using nmap and run standard exploits against your computer while VPN'ed.  Additionally, virus/worm propogation on the corporate network can propogate to VPN connected devices.
+(1a) Protect and encrypt all of your data on your PC, keep your PC fully patched, run current AV solution, and have blind faith that your OS is 100% secure (which it is not).
+(1b)  Your home network may be accessible if you have enabled internet connection sharing on your PC.  Additionally, broadcast traffic on your home network might be sniffed when your computer is attached. (Thus 'probably not' since most people do have these issues.)
+(1b)  turn off internet connection sharing.
+(2)  It is VERY easy to set a Cisco VPN to forward all web requests to the VPN host and log them while connected.  Simple.  I do it.  When you are connected to the VPN, your surfing IS available.
+(2)  Don't surf while connected.
+Go to www.ipchicken.com.  If the reported address is different when connected vs not connected, then your surfing is being watched.
+
+My employer has several hundred users connected with Cisco VPN client. I can remote control them, scan them for viruses and spyware, patch them and generally anything I want when they are connected. I can do it without their knowledge. I can also prevent my connection from being logged in the event logs. While they are connect with VPN client we can track their web traffic with our web filtering software.
+Some users have their personal computers, others have company laptops. I have no problems controlling either client. If the user is using local admin account on the pc I can use their rights to perform tasks.
+
+The main thing is how much access they have to your home network is based on rules your company's network administrators set. You have no control over this.
+
+https://seclectech.wordpress.com/2013/01/26/ditching-the-cisco-anyconnect-client-on-64-bit-ubuntu/
+ Enter OpenConnect an Open Source Cisco client, which claims to address a number of deficiencies in the official client:
+  Tempfile races allowing unprivileged users to trick it into overwriting arbitrary files, as root.
+  Unable to run as an unprivileged user, which would have reduced the severity of the above bug.
+  Inability to audit the source code for further such Security 101 bugs.
+ You'll need to get the Cisco Secure Desktop spyware (as they call it on the blog) from a 32 bit install of the AnyConnect which should be in $HOME/.cisco and copy it to your 64bit box.
+
+
+http://www.socsci.uci.edu/~jstern/uci_vpn_ubuntu/ubuntu-openconnect-uci-instructions.html
+ To use this method -- unlike the Cisco method -- requires that you have at least 2 terminals (or 2 terminal windows) going, so that you can keep one open (with a command-prompt unavailable) as long as the VPN software is going.
+ UCI's Office of Information Technology (OIT) has a good general VPN-Linux support page (see last section on that page, titled, Linux Openconnect Client) with instructions on setting up a connection to the campus VPN without using the Cisco AnyConnect VPN client software, and using the Openconnect open-source drivers instead. But that section is primarily Fedora-based, and getting the Openconnect method going on Ubuntu is a bit different than Fedora. So I thought I would share some tips below to fellow Ubuntu users
+ I found this method as easy to set up as Cisco's. It may not involve a fancy windowing interface or system-tray icons, but it is simple and works.
+sudo apt-get install openconnect lib32ncurses5 lib32tinfo5 lib32z1 libc6-i386 libpkcs11-helper1 openvpn vpnc-scripts
+
+# This script adapted from David Schneider's great page on github at
+#    https://github.com/dnschneid/crouton/wiki/Using-Cisco-AnyConnect-VPN-with-openconnect
+# possible values for VPNGRP:
+#   Default-WebVPN
+#   Merage
+#   MerageFull
+#   UCI  <--- this will use the VPN address only for connections to UCI. all other connections
+#             will use your outside address
+#   UCIFull <--- this will use the VPN address for all connections
+VPNGRP=UCI
+
+# your ucinetid (all lower-case)
+VPNUSER=anteater
+
+VPNURL=https://vpn.uci.edu
+VPNSCRIPT=/usr/share/vpnc-scripts/vpnc-script
+
+# tun1 is an arbitary name
+sudo openvpn --mktun --dev tun1 && \
+sudo ifconfig tun1 up && \
+sudo /usr/sbin/openconnect -s $VPNSCRIPT $VPNURL --user=$VPNUSER --authgroup=$VPNGRP --interface=tun1
+sudo ifconfig tun1 down
+
+To Disconnect Just return to this screen, and hit Ctrl-C only once and patiently wait for the cursor to return:
+After you hit Ctrl-C once, you will have to give it a few seconds for the last command in the script (sudo ifconfig tun1 down) to execute, and everything to shut down, before the prompt finally returns.
+^CSend BYE packet: Aborted by caller
+User canceled (SIGINT); exiting.
+
+To Test how your IP address appears..
+..to servers outside UCI: whatismyipaddress.com or Google
+You can also examine your network interface configuration:
+$ /sbin/ifconfig
+In the above example you can see that a new "tun1" section has been added
+
+
+
+
+
+

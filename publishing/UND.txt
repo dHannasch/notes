@@ -1,0 +1,66 @@
+
+flights go through MSP or DTW
+ even if start from BMI, on the other hand BMI is at least in the right direction
+
+TVF Thief River Falls (Minnesota) airport is only 60miles from Grand Forks and University of North Dakota
+ Hertz from Thief River Falls would be $150 for one day regardless of which Grand Forks location return to
+ Thief River Falls Hertz closed Saturday and Sunday, so can't use for return
+ taxi maybe $100
+http://www.tvoc.org/services/transportation/t-h-e-bus-schedule/
+ Daily Commuter Service: ( NCTC Aug – May Only)
+Thief River Falls to East Grand Forks
+ Depart TRF @ 6:50 am – Arrive in EGF @ 8:00 am
+ Depart TRF @ 4:30 pm – Arrive in EGF @ 5:45 pm
+East Grand Forks to Thief River Falls
+ Depart EGF @ 6:45 am – Arrive in TRF @ 8:00 am
+ Depart EGF @ 4:30 pm – Arrive in TRF @ 5:45 pm
+East Grand Forks, MN is in Polk County, MN
+ so bus about $12 each way http://www.tvoc.org/services/transportation/bus-farespasses/
+
+CHM -> BMI about 2.5hours, but BMI -> CHM 3.5hours
+flights between CMI and BMI go through ORD
+
+Chicago -> Detroit: Michigan Services Wolverine $60 5.5hours
+Chicago -> Minneapolis St Paul: Empire Builder $90 8hours
+Chicago -> Grand Forks: Empire Builder $128 (CHM, just CHI is $85) 14.5hours
+
+wait, Burlington Trailways has a one-hour bus from CHM to BMI for $15?
+ no, not really
+ Requested fares not found
+ We are sorry but there are no schedules currently available.
+In certain circumstances, state law requires that trips booked on Amtrak.com include at least one segment where you travel by train (rather than by Thruway bus only). This can be the outbound or return portion of a round-trip.
+ 8893 Thruway Bus 8:45am - 9:45am
+ 8895 Thruway Bus 2:35pm - 3:40pm
+BNL has Texas Eagle and Illinois Service https://www.amtrak.com/servlet/ContentServer?pagename=am/am2Station/Station_Page&code=BNL
+ adjacent to LCN, PON
+ CHM -> theoretically LCN $19
+ CHM -> theoretically PON $20 and won't display morning bus
+CHM has City of New Orleans and Illinois Service https://www.amtrak.com/servlet/ContentServer?pagename=am/am2Station/Station_Page&code=CHM
+ adjacent to KKI, MAT, RTL
+ BNL -> theoretically MAT using 8890 Thruway Bus 3:15pm - 4:15pm $21
+ BNL -> theoretically MAT using 8892 Thruway Bus 7:15pm - 8:15pm $24
+but no way to get the six miles to the airport without at least two buses
+Delta BMI 5pm -> GFK 11:30pm $390
+
+Tuesday April 5:
+6:10am - 9:00am 58 City Of New Orleans $22
+10:14am - 1:00pm 390 Saluki $15
+2:15pm - 4:41am (Apr 6) 27 Empire Builder
+American Airlines CMI 10am -> MSP 1:40pm $255
+Delta CHI 11am -> MSP 12:30pm $90
+Delta Flight 5190 MDW 12:55pm -> MSP 2:30pm $90
+Great Lakes Airlines Flight 2990 or 2995 $100
+ MSP 5:45pm -> TVF 7:05pm or MSP 10:30am -> TVF 11:50am
+ could stay night of April 5 in Thief River Falls and catch 6:50am commuter bus April 6
+ would be total of maybe $250 to get there?
+CHI -> GFK $480+
+
+Saturday April 9:
+Great Lakes Airlines Flight 2995 TVF 9:45am -> MSP 11am $102
+Delta Flight 4520 MSP 1pm -> MDW 2:40pm
+ but unlikely to catch 4:05pm Illini train...though technically might, hmm, $22
+ Greyhound 6:30pm -> CHM 9pm $13
+
+
+
+

@@ -1,0 +1,20 @@
+
+http://www.in-cites.com/scientists/DrDavidDonoho.html
+ Implement the method in software, place examples of the software's use in the paper, make the software of broad functionality, and give the software away for free.
+ In developing a methodology, develop synthetic test cases which you distribute freely over the Internet.
+
+DrTurk suggested Computing in Science & Engineering http://ieeexplore.ieee.org.proxy2.library.illinois.edu/search/searchresult.jsp?sortType=desc_p_Publication_Year&searchWithin=%22Publication%20Title%22:Computing%20in%20Science%20and%20Engineering
+
+some conferences don't want you to journal-publish the same paper afterward https://achilleaskostoulas.com/2014/01/11/can-i-publish-a-conference-paper-in-a-journal/
+ copyright of the papers that are included in the proceedings normally passes from the author(s) to the conference organisers. Sometimes, transfer of copyright is formally acknowledged in a signed document, but even if that is not the case, authors tacitly waive copyright when they submit a paper (although local law may allow the author to reserve some rights).
+ inserting a footnote in the article (e.g., The findings reported in this article were originally presented at)
+ A far more compelling argument in favour of a new publication can be made when the journal article is an expanded, more fully developed, or more refined version of the conference paper. At minimum, the text will have to be adjusted to meet the needs of the journal’s readership, and any changes that highlight different aspects of the study may be of scholarly value. In addition, conference papers tend to be shorter and more focused than journal articles: for instance, one may avoid lengthy literature reviews, assuming that the audience will be familiar with the field; or one may have to be selective with the presentation of data in order to keep within the time limit.
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,70 @@
+
+
+http://www.latextemplates.com/cat/conference-posters
+landscape beamerposter http://www.latextemplates.com/template/jacobs-landscape-poster
+https://www.overleaf.com/gallery/tagged/poster
+ has examples for beamerposter, a0poster, sciposter
+sciposter example https://github.com/cfournie/poster.example
+beamerposter http://www.njohnston.ca/2009/08/latex-poster-template/
+
+git clone https://github.com/deselaers/latex-beamerposter
+ has examples
+https://bitbucket.org/surmann/tikzposter
+ updated 2015-10-28
+
+http://tex.stackexchange.com/questions/341/how-to-create-posters-using-latex
+http://theoval.cmp.uea.ac.uk/~nlct/latex/posters/node5.html
+ The flowfram package defines three types of frame: flow frames, static frames and dynamic frames. The flow frames are the principle type of frame. The document text will flow from one flow frame to the next in the order that the frames were defined, just as text flows from the left column to the right column in LATEX's standard two-column mode.
+
+
+tikzposter
+ Advantages / Pros
+  Recently worked on - last time in 2015 (in CTAN is a 2014 version so far)
+  Supports block columns
+  Supports "notes" to blocks
+ Disadvantages / Cons
+  Conflicts with package hyperref* (= fixed bug, but fix is not yet in CTAN)
+  Package ragged2e shifts the title in unexpected way*.
+  Conflicts with package microtype* (= fixed bug, but fix is not yet in CTAN
+  No free floating blocks supported
+
+Brian Amberg baposter http://www.brian-amberg.de/uni/poster/
+
+
+
+a0poster Sup­ported sizes are DIN A0, DIN A1, DIN A2 and DIN A3.
+beamperposter en­ables the user to use beamer style op­er­a­tions on a can­vas of the sizes pro­vided by a0­poster
+http://tex.stackexchange.com/questions/53561/beamerposter-scale-parameter-text-font-size-and-title-font-size
+ \usepackage[size=custom,width=77,height=107,scale=1.4,orientation=portrait]{beamerposter}
+A0 size paper is 33.1 x 46.8 in
+ won't fit on ANSI E (34"X44")
+http://andreas.welcomes-you.com/projects/a0poster/
+
+You can get an A4 preview using the draft option on the a0poster class. You invoke this option using
+\documentclass[draft]{a0poster}
+and this scales the output from A0 to A4.
+Note, however, that the graphics and graphicx packages (which you will probably use to include figures in your poster) also have a draft option, and if you include this option on the \documentclass line, it will apply also to any include packages such as the graphics package. Its effect on that package is to suppress the display of the figures. If you do want to see the figures in the drafts (probably the case), then you will need to unset the draft flag, with either
+\usepackage[final]{graphics} if you are using the graphics package, or
+\usepackage[draft=false]{graphicx} if you are using the variant graphicx package.
+
+Alternatively, you might want to avoid using the [draft] option, or there may be some reason why it is problematic, so you have to rescale the A0 poster instead.
+The psresize utility (see below) will resize an A0 poster to A4 so that you can print it on a normal printer. To get the correct rescaling to A4 do:
+% psresize -H238cm -h59.5cm foo_a0.ps foo_a4.ps
+That's almost it. Unfortunately the resizer seems to offset the poster from the correct location on the page. Fortunately it's easy to fix. What you have to do is find the first line like "213.000 0.000 translate" (not necessarily those numbers exactly) and change it to "0.0 0.0 translate". You should find it just after the "%%Page" comment.
+
+Graeme has written a small perl script which will attempt to the whole conversion for you, it's called a0toa4.pl. http://nxg.me.uk/docs/posters/a0toa4.pl
+
+if you have a landscape poster you need to massage the postscript using a command like the following:
+% psnup -w85cm -h119cm -f my_poster_from_dvips.ps \
+    poster_in_proper_landscape.ps
+This command flips the poster through 90 degrees, so that it prints out correctly in lanscape format (otherwise you get a poster in landscape going across the A0 page, and it gets cut off at the edge). It's not quite clear which LaTeX package is to blame for this (it might even be the printer), but do preview the new postscript again before you print it, just to check it's not truncated, especially along the top edge (use "Portrait", "0.100" and "A0" as your options in gv).
+
+
+
+For package xcolor use \PassOptionsToPackage to pass options to xcolor. Wether you also \usepackage{xcolor} or not makes no difference since tikz already loads xcolor. Because of this options may clash if they are passed directly to a \usepackage{xcolor}. An example:
+\PassOptionsToPackage{usenames,dvipsnames,svgnames,table}{xcolor}
+
+
+http://colinpurrington.com/tips/poster-design
+
+

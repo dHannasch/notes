@@ -1,0 +1,8 @@
+
+journals on a specific topic will usually send anything on to the reviewers (if it's in that topic) but more general journals like Computing in Science and Engineering first do an editorial pass to decide whether it's worth their reviewers' time
+the purpose is really to convince them it's good, but officially the purpose is to explain why you chose that journal (read: why the article fits in that journal's purview)
+
+
+
+
+

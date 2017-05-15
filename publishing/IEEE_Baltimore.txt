@@ -1,0 +1,114 @@
+
+This would be a good conference to explore submitting to, particularly
+about meta-research problems.  Additionally, because it's at JHU,
+there would be opportunities to meet with folks at STSci and JHU about
+projects.
+
+I think that the interactive data visualization / vr would fit, as
+would bitmap indexing, and the open data releases and the hub.
+
+
+---------- Forwarded message ----------
+From: Katz, Daniel S <dskatz@illinois.edu>
+Date: Sat, May 7, 2016 at 7:23 AM
+Subject: Fwd: IEEE eScience 2016: Abstracts due May 16, Papers due May 23
+To: "software@ncsa.illinois.edu" <software@ncsa.illinois.edu>
+
+
+
+eScience Community,
+
+Deadline for the IEEE eScience 2016 conference in Baltimore Maryland
+are approaching fast --- abstract are due Monday May 16, and full
+papers due one week later on May 23!
+
+Submit your abstracts here:
+https://cmt3.research.microsoft.com/ESCIENCE2016
+
+We welcome submissions in cyberinfrastructure in support of science,
+systems and methods for data-intensive science, case studies in new
+discoveries enabled by eScience techniques and technologies, and
+scientometrics -- bibliometrics, reproducibility studies,
+sustainability studies, and more.
+
+More information on the conference website:
+http://escience-2016.idies.jhu.edu/call-for-papers/
+
+The conference is October 23 through 27 -- we hope to see you there!!
+
+Bill Howe and Martin Kersten, Program Chairs
+Alex Szalay and Randal Burns, General Chairs
+
+From the call:
+
+eScience continues to have a transformative impact across all fields.
+New discoveries are increasingly driven by the techniques and
+technologies of advanced computing, and eScience is the only community
+that brings together researchers, practitioners, sponsors, and users,
+across all disciplines and at all scales, to share ideas about how to
+design, deliver, and use these approaches. The eScience 2016
+conference will serve as the premier forum to present the latest
+research in systems, applications, and products from the international
+and interdisciplinary eScience community.
+
+A special emphasis for the 2016 conference is data-intensive science,
+scientific data management, and data science. In recent years,
+data-intensive science has taken center stage, and for good reason: in
+all fields, and at all scales, the bottleneck of discovery has shifted
+from data acquisition to data analysis, and the software and systems
+designed to extract knowledge from large, noisy, heterogeneous
+datasets are having transformative impact. In addition to the core
+topics of the eScience community, we encourage papers on systems,
+methods, and infrastructure supporting the integration, management,
+analysis, and visualization of complex datasets in one or more
+scientific fields.
+
+Major topics include but are not limited to:
+
+Data-Intensive Science:
+
+Scientific Databases
+Open Science and Open Data
+Sharing Sensitive Data and Data Privacy
+Collaborative Data Analysis
+Visualization and Visual Analytics
+Citizen Science
+
+Cyberinfrastucture for Science:
+
+Cloud computing platforms and applications
+High-performance computing platforms and applications
+Scalable Dataflow platforms and applications
+Complexity-hiding middleware
+Application deployment and integration
+
+Progress in major theme areas, e.g.:
+
+Precision Medicine, Translational Health Research
+Climate, Environmental, and Earth Science
+Civic Tech, Urban Data Science, Smart and Connected Communities
+Social Media Analytics
+Computational Social Science
+Digital Humanities
+Education Analytics
+Engineering
+
+Scientometrics:
+
+Scholarly Big Data and Large-Scale Bibliometrics
+Altmetrics and Scholarly Impact
+Reproducibility Studies
+Scientific Demographics
+Sustainability, Costs, and Funding
+
+
+Important Dates
+
+Conference: October 23 through 27, 2016
+Abstract Submission deadline: Monday May 16
+Paper Submission Deadline: Monday May 23
+Notification of Acceptance: July 5, 2016
+Camera-Ready Papers due: August 1, 2016
+
+
+
